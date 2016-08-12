@@ -1,9 +1,13 @@
 #------------------------------------------------------------
-# Document CRUD operations
+# CRUD operations
 #------------------------------------------------------------
 
 #------------------------------------------------------------
-# JSON documentをインデックスします
+# Create and Read
+
+# Index a JSON document with the document ID
+
+DELETE /library
 
 #    +--- Index name
 #    |       +--- Type name
@@ -12,57 +16,55 @@
 #    V       V     V
 PUT /library/books/1
 {
-  "title": "A fly on the wall",
+  "title": "Norwegian Wood",
   "name": {
-    "first": "Drosophila",
-    "last": "Melanogaster"
+    "first": "Haruki",
+    "last": "Murakami"
   },
-  "publish_date": "2016-07-11T11:11:11+0900",
+  "publish_date": "1987-09-04T00:00:00+0900",
   "price": 19.95
 }
 
-#------------------------------------------------------------
-# IDでdocumentを取得します
+# Read a document with the document ID
 
 GET /library/books/1
 
-#------------------------------------------------------------
-# IDを指定しなくてもdocumentを追加することが可能です
+# Index a JSON document without the document ID
 
-POST /library/books/1
+POST /library/books/
 {
-  "title": "A fly on the wall",
+  "title": "Kafka on the Shore",
   "name": {
-    "first": "Drosophila",
-    "last": "Melanogaster"
+    "first": "Haruki",
+    "last": "Murakami"
   },
-  "publish_date": "2016-07-11T11:11:11+0900",
+  "publish_date": "2002-09-12T00:00:00+0900",
   "price": 19.95
 }
 
+# Checkout the document ID and read with the document ID
+
+GET /library/books/<document_id>
+
 #------------------------------------------------------------
-# ただし、documentの取得には自動生成されたIDが必要です
+# Update
 
-GET /library/books
+# Update with the document ID
 
-#------------------------------------------------------------
-# アップデートするとdocumentは上書きされます
-
-POST /library/books/1
+PUT /library/books/1
 {
-  "title": "A fly on the wall Part 2",
+  "title": "Norwegian Wood",
   "name": {
-    "first": "Drosophila",
-    "last": "Melanogaster"
+    "first": "Haruki",
+    "last": "Murakami"
   },
-  "publish_date": "2016-07-11T11:11:11+0900",
+  "publish_date": "1987-09-04T00:00:00+0900",
   "price": 29.95
 }
 
 GET /library/books/1
 
-#------------------------------------------------------------
-# 部分的な更新はUpdate APIを使用します
+# Partial update of the document by _update API
 
 POST /library/books/1/_update
 {
@@ -76,23 +78,22 @@ GET /library/books/1
 POST /library/books/1/_update
 {
   "doc": {
-    "cn_price": 10
+    "price_jpy": 1800
   }
 }
 
 GET /library/books/1
 
 #------------------------------------------------------------
-# 削除することも可能です
+# Delete
 
 DELETE /library/books/1
 
 GET /library/books/1
 
-#------------------------------------------------------------
-# index自体を削除することも可能ですが、ご注意ください!
+# Delete entire index
 
-DELETE /library/books
+DELETE /library
 
 GET /libray/books/2
 

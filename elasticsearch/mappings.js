@@ -3,20 +3,41 @@
 #------------------------------------------------------------
 
 #------------------------------------------------------------
-# すべてのdocumentがschemaのようなmappingを持ちます
-# 事前に設定することも可能ですし、Elasticsearchに推測させることもできます
+# Index sample documents
+
+# Use _bulk API to index many data
+
+DELETE /library
+
+POST /library/books/_bulk
+{"index": {"_id": 1}}
+{"title": "The quick brown fox", "price": 5}
+{"index": {"_id": 2}}
+{"title": "The quick brown fox jumps over the lazy dog", "price": 15}
+{"index": {"_id": 3}}
+{"title": "The quick brown fox jumps over the quick dog", "price": 8}
+{"index": {"_id": 4}}
+{"title": "Brown fox and brown dog", "price": 2}
+{"index": {"_id": 5}}
+{"title": "Lazy dog", "price": 9}
+
+# More info: https://www.elastic.co/guide/en/elasticsearch/guide/current/bulk.html
+
+#------------------------------------------------------------
+# Add mappings
+
+# Every documents has a schema like mapping
 
 GET /library/_mapping
 
-#------------------------------------------------------------
-# Mappingの追加
+# Add mapping to `my_new_field`
 
 PUT /library/books/_mapping
 {
   "books": {
     "properties": {
       "my_new_field": {
-        "type": "string"
+        "type": "text"
       }
     }
   }
@@ -24,15 +45,14 @@ PUT /library/books/_mapping
 
 GET /library/_mapping
 
-#------------------------------------------------------------
-# analyzerなどを明示することも可能です
+# Analyzer can be also specified
 
 PUT /library/books/_mapping
 {
   "books": {
     "properties": {
       "english_field": {
-        "type": "string",
+        "type": "text",
         "analyzer": "english"
       }
     }
@@ -41,8 +61,7 @@ PUT /library/books/_mapping
 
 GET /library/_mapping
 
-#------------------------------------------------------------
-# すでに存在するfieldを変更することはできません
+# Updating existing field is not allowed
 
 PUT /library/books/_mapping
 {
@@ -55,8 +74,7 @@ PUT /library/books/_mapping
   }
 }
 
-#------------------------------------------------------------
-# Mappingをアップデートするとdocumentもアップデートされるでしょうか
+# Adding mapping does not affect on existing documents
 
 GET /library/books/_search
 
@@ -69,8 +87,7 @@ GET /library/books/_search
   }
 }
 
-#------------------------------------------------------------
-# データタイプが異なったデータを入れた場合はどうなるでしょうか
+# Indexing different data types of documents
 
 POST /log/transactions
 {

@@ -1,9 +1,13 @@
 #------------------------------------------------------------
-# Bulk indexing、search、analysis
+# Search
 #------------------------------------------------------------
 
 #------------------------------------------------------------
-# 多くのdocumentを一度にインデックスする場合には、Bulk APIを使用します
+# Index sample documents
+
+# Use _bulk API to index many data
+
+DELETE /library
 
 POST /library/books/_bulk
 {"index": {"_id": 1}}
@@ -20,13 +24,13 @@ POST /library/books/_bulk
 # More info: https://www.elastic.co/guide/en/elasticsearch/guide/current/bulk.html
 
 #------------------------------------------------------------
-# 基本的な検索を実行してみましょう
-# *すべて*のdocumentを取得します
+# Search basics
 
-GET /libray/books/_search
+# Get **all** the documents
 
-#------------------------------------------------------------
-# "fox"が含まれるdocumentを検索します
+GET /library/books/_search
+
+# Search documents wich contain "fox" with `match` query
 
 GET /library/books/_search
 {
@@ -37,8 +41,7 @@ GET /library/books/_search
   }
 }
 
-#------------------------------------------------------------
-# "quick"もしくは"dog"が含まれるdocumentを検索します
+# Search documents which contain "quick" or "dog"
 
 GET /library/books/_search
 {
@@ -49,8 +52,8 @@ GET /library/books/_search
   }
 }
 
-#------------------------------------------------------------
-# "quick dog"というフレーズが含まれるdocumentを検索します
+# Search documents which contain "quick dog" with `match_phrase`
+
 
 GET /library/books/_search
 {
@@ -61,8 +64,7 @@ GET /library/books/_search
   }
 }
 
-#------------------------------------------------------------
-# 検索結果は"relevance"によって、順位付けがされています
+# Relevance
 
 GET /library/books/_search
 {
@@ -76,8 +78,9 @@ GET /library/books/_search
 # More info: https://www.elastic.co/guide/en/elasticsearch/guide/current/relevance-intro.html
 
 #------------------------------------------------------------
-# 論理演算的な方法で、複数のクエリを組み合わせることができます
-# "quick"と"lazy dog"が含まれるdocumentを検索します
+# Bool query
+# Search documents which contain "quick" and "lazy dog"
+
 
 GET /library/books/_search
 {
@@ -105,8 +108,7 @@ GET /library/books/_search
   }
 }
 
-#------------------------------------------------------------
-# 組み合わせごとに検索結果を調整することができます
+# Weigh the query result
 
 GET /library/books/_search
 {
@@ -133,8 +135,7 @@ GET /library/books/_search
   }
 }
 
-#------------------------------------------------------------
-# マッチした部分を強調表示することもできます
+# Highlight matched terms
 
 GET /library/books/_search
 {
@@ -167,8 +168,9 @@ GET /library/books/_search
 }
 
 #------------------------------------------------------------
-# フィルターすることも可能です
-# 一般的にはクエリよりも高速です
+# Filtering
+
+# Filter the books the price between 5 to 10
 
 GET /library/books/_search
 {
@@ -186,8 +188,7 @@ GET /library/books/_search
   }
 }
 
-#------------------------------------------------------------
-# $5以上する本は以下のように求められます
+# Filter the books price is higher than 5
 
 GET /library/books/_search
 {
@@ -204,8 +205,8 @@ GET /library/books/_search
   }
 }
 
-#------------------------------------------------------------
-# "lazy dog"が含まれ、かつ$5以上の本は以下のとおり検索できます
+# Filter the books price is higher than 5,
+# then search the documents which contain "lazy dog"
 
 GET /library/books/_search
 {
