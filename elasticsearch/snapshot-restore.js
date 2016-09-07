@@ -108,7 +108,7 @@ GET _snapshot/my_backup/*
 
 POST _snapshot/my_backup/snapshot_1/_restore
 
-# Check if only the four documents are restored
+# Check if only the **four** documents are restored
 
 GET _cat/indices
 
@@ -118,7 +118,7 @@ DELETE plays
 
 POST _snapshot/my_backup/snapshot_2/_restore
 
-# Make `plays` index has seven documents
+# Make sure `plays` index has **seven** documents
 
 GET _cat/indices
 
