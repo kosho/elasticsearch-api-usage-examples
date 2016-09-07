@@ -63,10 +63,6 @@ GET _snapshot/my_backup/snapshot_1
 
 # All the currently stored snapshots can be listed as below
 
-GET _snapshot/my_backup/*
-
-# or
-
 GET _snapshot/my_backup/_all
 
 # All the currently **running** snapshot jobs can be listed as below
