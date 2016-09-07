@@ -14,3 +14,4 @@ Corresponding to Elasticsearch and X-Pack version 5.0.
 
 1. `alerting.js`: X-Pack Alerting (formally Watcher) usages
 2. `alerting-measure-time-differences.js`: Measure time difference of two events and write into another documents by using X-Pack Alerting
+3. `security-document-level-security.js`: Enable Document Level Security with X-Pack Security
