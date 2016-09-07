@@ -8,7 +8,8 @@ Corresponding to Elasticsearch and X-Pack version 5.0.
 2. `search.js`: Elasticsearch match, match_phrase and bool queries
 3. `analysis.js`: Elasticsearch analyze API, tokenizers and filters
 4. `mappings.js`: Elasticsearch field type mappings
-5. `dev.js`: Single node cluster typical setup
+5. `snapshot-restore.js`: Take and restore snapshots
+6. `dev.js`: Single node cluster typical setup
 
 ## X-Pack
 
