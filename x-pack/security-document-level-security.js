@@ -101,6 +101,8 @@ PUT security-sample/doc/3
 
 # Click on "Copy as cURL" and paste the command to your terminal
 # and append `-u fred:password`, then run curl
+# Your command should look like:
+# `curl -XGET "http://localhost:9200/security-sample/_search" -u fred:password`
 
 GET security-sample/_search
 
