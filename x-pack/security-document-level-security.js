@@ -101,7 +101,7 @@ PUT security-sample/doc/3
 
 # Click on "Copy as cURL" and paste the command to your terminal
 # and append `-u fred:password`, then run curl
-# Your command should look like:
+# Your command will look like:
 # `curl -XGET "http://localhost:9200/security-sample/_search" -u fred:password`
 
 GET security-sample/_search
@@ -109,7 +109,9 @@ GET security-sample/_search
 # You must have seen the document 1 and 3
 
 # Again click on "Copy as cURL" and paste the command to your terminal
-# and append `-u fred:password`, then run curl
+# and append `-u john:password`, then run curl
+# Your command will look like:
+# `curl -XGET "http://localhost:9200/security-sample/_search" -u john:password`
 
 GET security-sample/_search
 
