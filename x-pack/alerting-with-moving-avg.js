@@ -5,6 +5,8 @@
 # 120% greater than the moving average.
 #------------------------------------------------------------
 
+DELETE apache_elk_alerting
+
 # For realtime data, the timestamp of the range query can be "now-30d/d"
 
 POST _xpack/watcher/watch/_execute
@@ -69,3 +71,5 @@ POST _xpack/watcher/watch/_execute
       }
   }
 }
+
+GET apache_elk_alerting/_search
