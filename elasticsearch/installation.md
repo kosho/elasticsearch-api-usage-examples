@@ -2,18 +2,18 @@
 
 ## Elasticsearch
 
-1. Go to [www.elastic.co > Downloads > Elasticsearch](https://www.elastic.co/downloads/elasticsearch) and make sure the URL of the archive (e.g. https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/tar/elasticsearch/5.0.0-alpha5/elasticsearch-5.0.0-alpha5.tar.gz)
+1. Go to [www.elastic.co > Downloads > Elasticsearch](https://www.elastic.co/downloads/elasticsearch) and make sure the URL of the archive (e.g. `https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.0.0.tar.gz`)
 
 2. Run the following command to download and deploy to your local drive
 
 ```
-$ curl https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/tar/elasticsearch/5.0.0-alpha5/elasticsearch-5.0.0-alpha5.tar.gz | tar zxf -
+$ curl https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.0.0.tar.gz | tar zxf -
 ```
 
 3. (Optional) Move to `elasticsearch ` directory and install necessary plugins
 
 ```
-$ bin/elasticsearch-plugin install x-pack
+$ yes | bin/elasticsearch-plugin install x-pack
 $ bin/elasticsearch-plugin install analysis-icu
 $ bin/elasticsearch-plugin install analysis-kuromoji
 ```
@@ -26,18 +26,17 @@ $ bin/elasticsearch
 
 ## Kibana
 
-1. Go to [www.elastic.co > Downloads > Kibana](https://www.elastic.co/downloads/kibana) and make sure the URL of an appropriate package (e.g. https://download.elastic.co/kibana/kibana/kibana-5.0.0-alpha5-darwin-x86_64.tar.gz)
+1. Go to [www.elastic.co > Downloads > Kibana](https://www.elastic.co/downloads/kibana) and make sure the URL of an appropriate package (e.g. `https://artifacts.elastic.co/downloads/kibana/kibana-5.0.0-darwin-x86_64.tar.gz`)
 
 2. Run the following command to download and deploy to your local drive
 
 ```
-$ curl https://download.elastic.co/kibana/kibana/kibana-5.0.0-alpha5-darwin-x86_64.tar.gz | tar zxf -
+$ curl https://artifacts.elastic.co/downloads/kibana/kibana-5.0.0-darwin-x86_64.tar.gz | tar zxf -
 ```
 
 3. (Optional) Move to `kibana` directory and install plugins
 
 ```
-$ bin/kibana-plugin install timelion
 $ bin/kibana-plugin install x-pack
 ```
 
