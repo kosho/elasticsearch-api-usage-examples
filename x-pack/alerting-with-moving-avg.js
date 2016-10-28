@@ -58,13 +58,20 @@ POST _xpack/watcher/watch/_execute
       },
       "condition": {
         "script": {
-          "inline" : "return ctx.payload.aggregations.agg_day.buckets.29.agg_bytes.value > ctx.payload.aggregations.agg_day.buckets.29.agg_moving_avg.value * 1.2"
+          "lang": "painless",
+          "inline": "return ctx.payload.aggregations.agg_day.buckets.29.agg_bytes.value > ctx.payload.aggregations.agg_day.buckets.29.agg_moving_avg.value * params.gap",
+          "params" : {
+            "gap": 1.0
+          }
         }
       },
       "actions": {
         "index_payload": {
           "transform": {
-            "script": "return ctx.payload.aggregations.agg_day.buckets.29"
+            "script": {
+              "lang": "painless",
+              "inline": "return ctx.payload.aggregations.agg_day.buckets.29"
+            }
           },
           "index": {
             "index": "apache_elk_alerting",
