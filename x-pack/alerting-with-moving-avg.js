@@ -63,6 +63,9 @@ POST _xpack/watcher/watch/_execute
       },
       "actions": {
         "index_payload": {
+          "transform": {
+            "script": "return ctx.payload.aggregations.agg_day.buckets.29"
+          },
           "index": {
             "index": "apache_elk_alerting",
             "doc_type": "log"

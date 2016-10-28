@@ -35,52 +35,55 @@ PUT /auth/data/_bulk
 GET /auth/_search
 {
   "size": 0,
-  "aggs": {
-    "agg_session_id": {
-      "terms": {
-        "field": "session_id.keyword"
+    "aggs": {
+      "agg_session_id": {
+        "terms": {
+          "field": "session_id.keyword"
+        }
       }
     }
-  }
 }
 
 GET /auth/_search
 {
   "size": 0,
-  "aggs": {
-    "agg_session_id": {
-      "terms": {
-        "field": "session_id.keyword"
-      },
-      "aggs": {
-        "agg_user": {
-          "terms": {
-            "field": "user.keyword",
-            "size": 1
-          }
+    "aggs": {
+      "agg_session_id": {
+        "terms": {
+          "field": "session_id.keyword"
         },
-        "agg_start": {
-          "min": {
-            "field": "@timestamp"
-          }
-        },
-        "agg_end": {
-          "max": {
-            "field": "@timestamp"
-          }
-        },
-        "agg_duration": {
-          "bucket_script": {
-            "buckets_path": {
-              "min": "agg_start",
-              "max": "agg_end"
-            },
-            "script": "max - min"
+        "aggs": {
+          "agg_user": {
+            "terms": {
+              "field": "user.keyword",
+              "size": 1
+            }
+          },
+          "agg_start": {
+            "min": {
+              "field": "@timestamp"
+            }
+          },
+          "agg_end": {
+            "max": {
+              "field": "@timestamp"
+            }
+          },
+          "agg_duration": {
+            "bucket_script": {
+              "buckets_path": {
+                "min": "agg_start",
+                "max": "agg_end"
+              },
+              "script": {
+                "lang": "painless",
+                "inline": "return params.max - params.min"
+              }
+            }
           }
         }
       }
     }
-  }
 }
 
 #------------------------------------------------------------
@@ -99,70 +102,76 @@ PUT _xpack/watcher/watch/_execute
         }
       }
     },
-    "input": {
-      "search": {
-        "request": {
-          "indices": [
-            "auth"
-          ],
-          "body": {
-            "size": 0,
-            "aggs": {
-              "agg_session_id": {
-                "terms": {
-                  "field": "session_id.keyword"
-                },
-                "aggs": {
-                  "agg_user": {
-                    "terms": {
-                      "field": "user.keyword",
-                      "size": 1
-                    }
+      "input": {
+        "search": {
+          "request": {
+            "indices": [
+              "auth"
+            ],
+            "body": {
+              "size": 0,
+              "aggs": {
+                "agg_session_id": {
+                  "terms": {
+                    "field": "session_id.keyword"
                   },
-                  "agg_start": {
-                    "min": {
-                      "field": "@timestamp"
-                    }
-                  },
-                  "agg_end": {
-                    "max": {
-                      "field": "@timestamp"
-                    }
-                  },
-                  "agg_duration": {
-                    "bucket_script": {
-                      "buckets_path": {
-                        "min": "agg_start",
-                        "max": "agg_end"
-                      },
-                      "script": "max - min"
+                  "aggs": {
+                    "agg_user": {
+                      "terms": {
+                        "field": "user.keyword",
+                        "size": 1
+                      }
+                    },
+                    "agg_start": {
+                      "min": {
+                        "field": "@timestamp"
+                      }
+                    },
+                    "agg_end": {
+                      "max": {
+                        "field": "@timestamp"
+                      }
+                    },
+                    "agg_duration": {
+                      "bucket_script": {
+                        "buckets_path": {
+                          "min": "agg_start",
+                          "max": "agg_end"
+                        },
+                        "script": {
+                          "lang": "painless",
+                          "inline": "return params.max - params.min"
+                        }
+                      }
                     }
                   }
                 }
               }
             }
+          },
+          "extract": [
+            "aggregations.agg_session_id"
+          ]
+        }
+      },
+      "condition": {
+        "always": {}
+      },
+      "transform": {},
+      "actions": {
+        "index_payload": {
+          "transform": {
+            "script": {
+              "lang": "groovy",        
+              "inline": "return [ _doc : ctx.payload.aggregations.agg_session_id.buckets ]"
+            }
+          },
+          "index": {
+            "index": "auth-statistics",
+            "doc_type": "log"
           }
-        },
-        "extract": [
-          "aggregations.agg_session_id"
-        ]
-      }
-    },
-    "condition": {
-      "always": {}
-    },
-    "transform": {},
-    "actions": {
-      "index_payload": {
-        "transform": {
-          "script": "return [ _doc : ctx.payload.aggregations.agg_session_id.buckets ]"
-        },
-        "index": {
-          "index": "auth-statistics",
-          "doc_type": "log"
         }
       }
-    }
   }
 }
 
