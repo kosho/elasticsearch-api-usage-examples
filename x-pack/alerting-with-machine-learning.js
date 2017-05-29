@@ -67,7 +67,7 @@
         "slack": {
           "message": {
             "from": "Machine Learning Job",
-            "text": "Anomaly found by {{ctx.payload.first.buckets.0.job_id}} at {{ctx.execution_time}}.\nInfluenced by:{{#ctx.payload.second.influencers}} * {{influencer_field_name}}: {{influencer_field_value}} {{/ctx.payload.second.influencers}}"
+            "text": "Anomaly found by {{ctx.payload.first.buckets.0.job_id}} at {{ctx.execution_time}}.\nInfluenced by:{{#ctx.payload.second.influencers}} * {{influencer_field_name}}: {{influencer_field_value}}\n{{/ctx.payload.second.influencers}}"
           }
         }
       }
