@@ -138,10 +138,7 @@ PUT _xpack/watcher/watch/_execute
                           "min": "agg_start",
                           "max": "agg_end"
                         },
-                        "script": {
-                          "lang": "painless",
-                          "inline": "return params.max - params.min"
-                        }
+                        "script":  "return params.max - params.min"
                       }
                     }
                   }
@@ -161,10 +158,7 @@ PUT _xpack/watcher/watch/_execute
       "actions": {
         "index_payload": {
           "transform": {
-            "script": {
-              "lang": "groovy",        
-              "inline": "return [ _doc : ctx.payload.aggregations.agg_session_id.buckets ]"
-            }
+            "script":  "return [ '_doc' : ctx.payload.aggregations.agg_session_id.buckets]"
           },
           "index": {
             "index": "auth-statistics",
