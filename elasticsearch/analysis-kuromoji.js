@@ -53,7 +53,8 @@ PUT books
               "kuromoji_iteration_mark"
             ],
             "filter": [
-              "kuromoji_nouns"
+              "kuromoji_nouns",
+              "katakana_stemmer"
             ]
           }
         },
